@@ -1,0 +1,40 @@
+/* Reset định dạng mặc định */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 1. Thiết lập màu nền (background-color) cho toàn trang web */
+body {
+  background-color: #f0f4f8; /* Màu nền xám xanh nhạt nhẹ nhàng */
+  font-family: Arial, sans-serif;
+  color: #333;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+/* Định dạng tiêu đề và đoạn văn mô tả */
+h1 {
+  color: #1e3a8a;
+  margin-bottom: 12px;
+}
+
+.description {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  color: #4b5563;
+}
+
+
+.content-box {
+ 
+  background-image: url('https://picsum.photos/600/400');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.content-box h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
