@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hành Trình Chinh Phục Tri Thức - Book Landing Page</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts (Inter & Merriweather) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary-color: #06b6d4;
+            --dark-color: #0f172a;
+            --light-bg: #f8fafc;
+            --text-muted: #64748b;
+            --accent-color: #f59e0b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #334155;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'Merriweather', serif;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            transition: all 0.3s ease;
+            padding: 1rem 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 0.6rem 0;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--dark-color) !important;
+            margin: 0 0.4rem;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+
+        /* Buttons */
+        .btn-primary-custom {
+            background-color: var(--primary-color);
+            color: #fff;
+            font-weight: 600;
+            border-radius: 50px;
+            padding: 0.75rem 1.8rem;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+        }
+
+        .btn-primary-custom:hover {
+            background-color: var(--primary-hover);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.45);
+        }
+
+        .btn-outline-custom {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+            border-radius: 50px;
+            padding: 0.7rem 1.8rem;
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-custom:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section & 3D Book Mockup */
+        .hero-section {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f1f5f9 50%, #e0f2fe 100%);
+            padding: 8rem 0 5rem;
+            position: relative;
+        }
+
+        .book-container {
+            perspective: 1200px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .book-3d {
+            width: 260px;
+            height: 380px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateY(-25deg) rotateX(10deg);
+            transition: transform 0.5s ease;
+            box-shadow: -15px 15px 30px rgba(0, 0, 0, 0.25);
+            border-radius: 4px 12px 12px 4px;
+        }
+
+        .book-container:hover .book-3d {
+            transform: rotateY(-10deg) rotateX(5deg) translateY(-8px);
+            box-shadow: -20px 25px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .book-cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 4px 12px 12px 4px;
+            background: linear-gradient(135deg, #4f46e5, #06b6d4);
+            color: white;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-left: 5px solid rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+        }
+
+        .book-cover::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 12%);
+            pointer-events: none;
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            border: none;
+            border-radius: 16px;
+            background: #ffffff;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            background: rgba(79, 70, 229, 0.1);
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        /* Pricing Cards */
+        .pricing-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            background: #fff;
+            position: relative;
+        }
+
+        .pricing-card.popular {
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.15);
+            transform: scale(1.03);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Author Section */
+        .author-img-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .author-img-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 100%;
+            height: 100%;
+            border: 3px solid var(--primary-color);
+            border-radius: 20px;
+            z-index: 0;
+        }
+
+        .author-img {
+            position: relative;
+            z-index: 1;
+            border-radius: 20px;
+            object-fit: cover;
+        }
+
+        /* Download Section */
+        .download-box {
+            background: linear-gradient(135deg, var(--dark-color), #1e293b);
+            border-radius: 24px;
+            color: white;
+            padding: 3.5rem 2rem;
+        }
+
+        /* Testimonials */
+        .testimonial-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+            border: 1px solid #f1f5f9;
+            height: 100%;
+        }
+
+        .avatar-img {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Accordion Custom */
+        .accordion-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px !important;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(79, 70, 229, 0.08);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+        }
+
+        /* Section Title Styling */
+        .section-subtitle {
+            color: var(--primary-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Tweaks */
+        @media (max-width: 991px) {
+            .pricing-card.popular {
+                transform: scale(1);
+            }
+            .hero-section {
+                padding-top: 6.5rem;
+            }
+            .book-container {
+                margin-top: 2rem;
+            }
+        }
+    </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="80">
+
+    <!-- 1. HEADER (NAVBAR) -->
+    <nav id="navbar" class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold text-dark fs-4" href="#">
+                <i class="fa-solid fa-book-open-reader text-primary"></i>
+                <span>TƯ DUY ĐỘT PHÁ</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto me-3 my-2 my-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="#hero">Tổng quan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#author">Tác giả</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Đặc điểm</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#prices">Bảng giá</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#download">Tải về</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#reviews">Đánh giá</a></li>
+                </ul>
+                <a href="#prices" class="btn btn-primary-custom btn-sm px-4">Mua Ngay</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. BOOK OVERVIEW (HERO SECTION) -->
+    <section id="hero" class="hero-section align-items-center d-flex">
+        <div class="container">
+            <div class="row align-items-center gy-5">
+                <div class="col-lg-7 text-center text-lg-start">
+                    <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-2 rounded-pill mb-3">
+                        <i class="fa-solid fa-star text-warning me-1"></i> Bestseller Quốc Tế 2026
+                    </span>
+                    <h1 class="display-4 fw-extrabold text-dark mb-3 lh-sm">
+                        Khai Mở Tiềm Năng & Tạo Bước Ngoặt Cho Tương Lai
+                    </h1>
+                    <p class="lead text-secondary mb-4">
+                        Cuốn sách thực chiến giúp bạn xây dựng tư duy sắc bén, làm chủ thói quen hiệu suất cao và bứt phá sự nghiệp trong thời đại kỹ thuật số.
+                    </p>
+
+                    <!-- Quick highlights -->
+                    <div class="row g-3 mb-4 text-start justify-content-center justify-content-lg-start">
+                        <div class="col-auto">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-success fs-5"></i>
+                                <span class="fw-medium text-dark">12+ Phương pháp thực chiến</span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-success fs-5"></i>
+                                <span class="fw-medium text-dark">50.000+ Độc giả tin dùng</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Call to action buttons -->
+                    <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
+                        <a href="#prices" class="btn btn-primary-custom fs-6">
+                            <i class="fa-solid fa-cart-shopping me-2"></i>Đặt Mua Ngay
+                        </a>
+                        <a href="#download" class="btn btn-outline-custom fs-6">
+                            <i class="fa-solid fa-file-pdf me-2"></i>Đọc Thử Miễn Phí
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 3D Book Mockup Visual -->
+                <div class="col-lg-5">
+                    <div class="book-container">
+                        <div class="book-3d">
+                            <div class="book-cover">
+                                <div>
+                                    <span class="text-uppercase tracking-wider small opacity-75">Sách Kỹ Năng Sống</span>
+                                    <h3 class="fw-bold mt-2 text-white">TƯ DUY ĐỘT PHÁ</h3>
+                                    <p class="small text-white-50">Làm chủ vận mệnh cá nhân</p>
+                                </div>
+                                <div>
+                                    <p class="small mb-1 fw-semibold text-warning">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </p>
+                                    <p class="mb-0 small text-white-50">Tác giả: <strong>Nguyễn Văn Anh</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. AUTHOR SECTION -->
+    <section id="author" class="py-5 bg-white">
+        <div class="container py-4">
+            <div class="row align-items-center gy-5">
+                <div class="col-lg-5 text-center">
+                    <div class="author-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80" 
+                             alt="Tác giả Nguyễn Văn Anh" 
+                             class="img-fluid author-img shadow" 
+                             width="380" 
+                             height="450"
+                             onerror="this.src='https://placehold.co/380x450/4f46e5/ffffff?text=Tac+Gia'">
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <span class="section-subtitle">Về Tác Giả</span>
+                    <h2 class="fw-bold text-dark mt-1 mb-3">Nguyễn Văn Anh</h2>
+                    <p class="text-muted lead fs-6">
+                        Chuyên gia tư vấn chiến lược doanh nghiệp và tác giả của hơn 5 đầu sách bán chạy hàng đầu về phát triển bản thân & quản trị kinh doanh.
+                    </p>
+                    <p class="text-secondary">
+                        Với hơn 15 năm kinh nghiệm làm việc cùng các tập đoàn đa quốc gia và đào tạo hàng nghìn lãnh đạo trẻ, ông đã đúc kết những bài học xương máu nhất để gói gọn trong cuốn "Tư Duy Đột Phá". Mục tiêu của ông là giúp bạn rút ngắn 5 năm chệch hướng trong sự nghiệp.
+                    </p>
+
+                    <!-- Achievements Grid -->
+                    <div class="row g-3 my-3">
+                        <div class="col-6 col-sm-4">
+                            <div class="border-start border-3 border-primary ps-3">
+                                <h3 class="fw-bold mb-0 text-dark">15+</h3>
+                                <span class="small text-muted">Năm kinh nghiệm</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            <div class="border-start border-3 border-primary ps-3">
+                                <h3 class="fw-bold mb-0 text-dark">05</h3>
+                                <span class="small text-muted">Đầu sách xuất bản</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            <div class="border-start border-3 border-primary ps-3">
+                                <h3 class="fw-bold mb-0 text-dark">100K+</h3>
+                                <span class="small text-muted">Học viên toàn quốc</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="d-flex align-items-center gap-3 mt-4">
+                        <span class="fw-semibold text-dark">Kết nối:</span>
+                        <a href="#" class="btn btn-light btn-sm rounded-circle text-primary"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="btn btn-light btn-sm rounded-circle text-info"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="btn btn-light btn-sm rounded-circle text-danger"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="#" class="btn btn-light btn-sm rounded-circle text-primary"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. FEATURES & CHAPTERS SECTION -->
+    <section id="features" class="py-5" style="background-color: var(--light-bg);">
+        <div class="container py-4">
+            <div class="text-center max-w-xl mx-auto mb-5">
+                <span class="section-subtitle">Giá Trị Cốt Lõi</span>
+                <h2 class="fw-bold text-dark mt-1">Nội Dung Nổi Bật Của Cuốn Sách</h2>
+                <p class="text-muted">Khám phá những kiến thức thực tiễn giúp bạn thay đổi hoàn toàn góc nhìn và cách hành động.</p>
+            </div>
+
+            <!-- Features Cards -->
+            <div class="row g-4 mb-5">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card feature-card p-4">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2">Tái Cấu Trúc Tư Duy</h5>
+                        <p class="text-muted small mb-0">Loại bỏ tư دی cố định (Fixed Mindset) để hình thành tư duy phát triển không giới hạn đối mặt thử thách.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card feature-card p-4">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2">Tối Ưu Hóa Năng Suất</h5>
+                        <p class="text-muted small mb-0">Áp dụng nguyên lý 80/20 và kỹ thuật quản lý thời gian đỉnh cao để hoàn thành nhiều công việc hơn trong ít thời gian hơn.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card feature-card p-4">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2">Xây Dựng Mục Tiêu</h5>
+                        <p class="text-muted small mb-0">Quy trình 5 bước hiện thực hóa mọi mục tiêu lớn từ cá nhân đến sự nghiệp kinh doanh.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book Chapters / Accordion -->
+            <div class="row justify-content-center mt-5">
+                <div class="col-lg-8">
+                    <h3 class="fw-bold text-center mb-4">Mục Lục Chi Tiết Các Chương</h3>
+                    <div class="accordion" id="chaptersAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#chap1">
+                                    <span class="badge bg-primary me-3">Chương 1</span> Nhận thức lại bản thân trong thế giới số
+                                </button>
+                            </h2>
+                            <div id="chap1" class="accordion-collapse collapse show" data-bs-parent="#chaptersAccordion">
+                                <div class="accordion-body text-muted small">
+                                    Khám phá thực trạng quá tải thông tin hiện nay và phương pháp lọc tín hiệu chuẩn xác để giữ tâm trí luôn minh mẫn và đi đúng hướng.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#chap2">
+                                    <span class="badge bg-primary me-3">Chương 2</span> 7 Thói quen của người thành công bứt phá
+                                </button>
+                            </h2>
+                            <div id="chap2" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
+                                <div class="accordion-body text-muted small">
+                                    Phân tích chuyên sâu 7 thói quen hàng ngày được áp dụng bởi các CEO và Nhà sáng lập hàng đầu thế giới.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#chap3">
+                                    <span class="badge bg-primary me-3">Chương 3</span> Làm chủ cảm xúc & Vượt qua thất bại
+                                </button>
+                            </h2>
+                            <div id="chap3" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
+                                <div class="accordion-body text-muted small">
+                                    Học cách biến nghịch cảnh thành bàn đạp tiến lên, rèn luyện sự kiên cường (Resilience) trong mọi tình huống.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#chap4">
+                                    <span class="badge bg-primary me-3">Chương 4</span> Kế hoạch hành động 90 ngày
+                                </button>
+                            </h2>
+                            <div id="chap4" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
+                                <div class="accordion-body text-muted small">
+                                    Khung biểu mẫu thực hành từng bước giúp bạn theo dõi sự tiến bộ và đạt được mục tiêu trong vòng 3 tháng.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. PRICES SECTION -->
+    <section id="prices" class="py-5 bg-white">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <span class="section-subtitle">Lựa Chọn Phiên Bản</span>
+                <h2 class="fw-bold text-dark mt-1">Bảng Giá & Gói Ưu Đãi</h2>
+                <p class="text-muted">Lựa chọn định dạng phù hợp nhất với phong cách đọc của bạn.</p>
+            </div>
+
+            <div class="row g-4 align-items-center justify-content-center">
+                <!-- Ebook -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card pricing-card p-4">
+                        <div class="text-center border-bottom pb-4 mb-4">
+                            <h5 class="fw-bold text-dark">Ebook PDF/EPUB</h5>
+                            <p class="text-muted small">Đọc tiện lợi trên Phone, iPad, Kindle</p>
+                            <div class="d-flex justify-content-center align-items-baseline my-3">
+                                <span class="fs-2 fw-bold text-dark">149.000</span>
+                                <span class="text-muted ms-1">VNĐ</span>
+                            </div>
+                        </div>
+                        <ul class="list-unstyled mb-4 space-y-2">
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i>File PDF & EPUB chất lượng cao</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i>Tải về ngay sau khi thanh toán</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i>Tặng kèm File Audio tóm tắt</li>
+                            <li class="mb-2 text-muted opacity-50"><i class="fa-solid fa-xmark me-2"></i>Sách in bìa cứng</li>
+                        </ul>
+                        <button class="btn btn-outline-custom w-100">Đặt Mua Ebook</button>
+                    </div>
+                </div>
+
+                <!-- Paperback (Popular) -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card pricing-card popular p-4">
+                        <span class="pricing-badge">Phổ Biến Nhất</span>
+                        <div class="text-center border-bottom pb-4 mb-4">
+                            <h5 class="fw-bold text-primary">Sách In Bìa Mềm</h5>
+                            <p class="text-muted small">Bản in giấy Cực Đẹp + Sổ tay bài tập</p>
+                            <div class="d-flex justify-content-center align-items-baseline my-3">
+                                <span class="fs-2 fw-bold text-primary">249.000</span>
+                                <span class="text-muted ms-1">VNĐ</span>
+                            </div>
+                        </div>
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i>Sách in giấy Phần Lan chống lóa</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i>Miễn phí vận chuyển toàn quốc</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i>Tặng kèm Bản Ebook PDF</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i>Tặng Bookmark thiết kế độc quyền</li>
+                        </ul>
+                        <button class="btn btn-primary-custom w-100">Đặt Mua Bìa Mềm</button>
+                    </div>
+                </div>
+
+                <!-- Hardcover -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card pricing-card p-4">
+                        <div class="text-center border-bottom pb-4 mb-4">
+                            <h5 class="fw-bold text-dark">Combo Sưu Tầm Hardcover</h5>
+                            <p class="text-muted small">Bìa cứng mạ vàng + Chữ ký tác giả</p>
+                            <div class="d-flex justify-content-center align-items-baseline my-3">
+                                <span class="fs-2 fw-bold text-dark">399.000</span>
+                                <span class="text-muted ms-1">VNĐ</span>
+                            </div>
+                        </div>
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i>Bản giới hạn in bìa cứng ép kim</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i>Có chữ ký tay trực tiếp từ Tác giả</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i>Vé tham dự Webinar trực tuyến</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i>Full trọn bộ quà tặng độc quyền</li>
+                        </ul>
+                        <button class="btn btn-outline-custom w-100">Đặt Mua Bản Sưu Tầm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. DOWNLOAD / FREE SAMPLE SECTION -->
+    <section id="download" class="py-5" style="background-color: var(--light-bg);">
+        <div class="container py-3">
+            <div class="download-box shadow-lg">
+                <div class="row align-items-center gy-4">
+                    <div class="col-lg-7 text-center text-lg-start">
+                        <span class="badge bg-warning text-dark fw-bold mb-2">Đọc Thử Miễn Phí</span>
+                        <h2 class="fw-bold text-white mb-2">Tải Ngay 2 Chương Đầu Tiên (PDF)</h2>
+                        <p class="text-white-50 mb-0">
+                            Nhập địa chỉ Email của bạn để nhận ngay bản đọc thử định dạng PDF chất lượng cao hoàn toàn miễn phí qua Email trong 30 giây.
+                        </p>
+                    </div>
+                    <div class="col-lg-5">
+                        <form onsubmit="handleDownload(event)" class="d-flex flex-column gap-3">
+                            <div>
+                                <input type="text" class="form-control form-control-lg rounded-pill border-0 px-4 fs-6" placeholder="Họ và tên của bạn..." required>
+                            </div>
+                            <div>
+                                <input type="email" class="form-control form-control-lg rounded-pill border-0 px-4 fs-6" placeholder="Địa chỉ Email nhận sách..." required>
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom btn-lg rounded-pill w-100">
+                                <i class="fa-solid fa-paper-plane me-2"></i>Nhận Bản Đọc Thử
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. READER'S SAY (TESTIMONIALS) -->
+    <section id="reviews" class="py-5 bg-white">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <span class="section-subtitle">Đánh Giá Từ Độc Giả</span>
+                <h2 class="fw-bold text-dark mt-1">Cảm Nhận Sau Khi Đọc</h2>
+                <p class="text-muted">Hơn 50.000+ người đã thay đổi tư duy sau khi áp dụng cuốn sách này.</p>
+            </div>
+
+            <!-- Testimonials Grid -->
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="testimonial-card d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="text-warning mb-3">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-muted fst-italic mb-4">
+                                "Cuốn sách đã thực sự mở mắt cho tôi. Những phương pháp trong chương 2 giúp tôi tái cấu trúc lại công việc hàng ngày và tăng gấp đôi hiệu suất."
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Avatar Độc Giả" class="avatar-img" onerror="this.src='https://placehold.co/100x100/4f46e5/ffffff?text=User'">
+                            <div>
+                                <h6 class="fw-bold mb-0 text-dark">Trần Minh Hoàng</h6>
+                                <span class="small text-muted">CEO tại Startup Tech</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="testimonial-card d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="text-warning mb-3">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-muted fst-italic mb-4">
+                                "Cách viết vô cùng thực chiến, không hề lý thuyết suông. Bất kỳ ai đang mất định hướng sự nghiệp đều nên đọc cuốn sách này ít nhất một lần."
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" alt="Avatar Độc Giả" class="avatar-img" onerror="this.src='https://placehold.co/100x100/4f46e5/ffffff?text=User'">
+                            <div>
+                                <h6 class="fw-bold mb-0 text-dark">Lê Thị Mai</h6>
+                                <span class="small text-muted">Quản Lý Marketing</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="testimonial-card d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="text-warning mb-3">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-muted fst-italic mb-4">
+                                "Hình thức in ấn đẹp, chất lượng giấy chống mỏi mắt. Nội dung bài tập thực hành 90 ngày ở cuối sách vô cùng giá trị!"
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80" alt="Avatar Độc Giả" class="avatar-img" onerror="this.src='https://placehold.co/100x100/4f46e5/ffffff?text=User'">
+                            <div>
+                                <h6 class="fw-bold mb-0 text-dark">Phạm Quốc Bảo</h6>
+                                <span class="small text-muted">Tác giả tự do</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. FOOTER -->
+    <footer class="bg-dark text-white pt-5 pb-4">
+        <div class="container">
+            <div class="row gy-4 mb-4">
+                <div class="col-lg-4 col-md-6">
+                    <a class="d-flex align-items-center gap-2 fw-bold text-white fs-4 mb-3 text-decoration-none" href="#">
+                        <i class="fa-solid fa-book-open-reader text-primary"></i>
+                        <span>TƯ DUY ĐỘT PHÁ</span>
+                    </a>
+                    <p class="text-white-50 small mb-3">
+                        Trang thông tin chính thức giới thiệu và phát hành cuốn sách "Tư Duy Đột Phá - Làm chủ vận mệnh cá nhân".
+                    </p>
+                    <div class="d-flex gap-2">
+                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="fw-bold mb-3">Liên Kết Nhanh</h6>
+                    <ul class="list-unstyled text-white-50 small space-y-2">
+                        <li class="mb-2"><a href="#hero" class="text-white-50 text-decoration-none">Tổng quan</a></li>
+                        <li class="mb-2"><a href="#author" class="text-white-50 text-decoration-none">Tác giả</a></li>
+                        <li class="mb-2"><a href="#features" class="text-white-50 text-decoration-none">Đặc điểm</a></li>
+                        <li class="mb-2"><a href="#prices" class="text-white-50 text-decoration-none">Bảng giá</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="ps-0 ps-lg-3">
+                        <h6 class="fw-bold mb-3">Chính Sách</h6>
+                        <ul class="list-unstyled text-white-50 small">
+                            <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Chính sách bảo mật</a></li>
+                            <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Điều khoản dịch vụ</a></li>
+                            <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Chính sách đổi trả</a></li>
+                            <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Giao hàng & Thanh toán</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="fw-bold mb-3">Liên Hệ</h6>
+                    <ul class="list-unstyled text-white-50 small">
+                        <li class="mb-2"><i class="fa-solid fa-location-dot me-2 text-primary"></i> Tầng 5, Tòa nhà Tri Thức, Hà Nội</li>
+                        <li class="mb-2"><i class="fa-solid fa-phone me-2 text-primary"></i> 1900 6789 - 0988 123 456</li>
+                        <li class="mb-2"><i class="fa-solid fa-envelope me-2 text-primary"></i> contact@tuduydotpha.vn</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="border-secondary my-4">
+
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                    <span class="small text-white-50">&copy; 2026 Tư Duy Đột Phá. All rights reserved.</span>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <span class="small text-white-50 me-2">Phương thức thanh toán:</span>
+                    <i class="fa-brands fa-cc-visa me-2 fs-5"></i>
+                    <i class="fa-brands fa-cc-mastercard me-2 fs-5"></i>
+                    <i class="fa-solid fa-qrcode fs-5"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Script -->
+    <script>
+        // Navbar scrolled class toggle
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Handle Download Form Submit
+        function handleDownload(event) {
+            event.preventDefault();
+            alert('Cảm ơn bạn đã đăng ký! Bản đọc thử (PDF) đã được gửi đến email của bạn.');
+        }
+    </script>
+</body>
+</html>
